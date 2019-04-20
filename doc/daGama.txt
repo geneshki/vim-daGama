@@ -1,0 +1,102 @@
+*daGama* A vim plugin to navigate projects of underwater rocks.
+
+===============================================================================
+CONTENTS                                                       *daGamaContents*
+
+  1. Overview ........................ |daGama-overview|
+  2. Usage ........................... |daGama-usage|
+  3. Mappings ........................ |daGama-mappings|
+  4. License ......................... |daGama-license|
+  5. Bugs ............................ |daGama-bugs|
+  6. Contributing .................... |daGama-contributing|
+  7. Changelog ....................... |daGama-changelog|
+  8. Credits ......................... |daGama-credits|
+
+===============================================================================
+Section 1: Overview                                           *daGama-overview*
+
+This is a plugin, which helps with navigation through files in a software
+project.
+
+Simply hit <localleader>q and behold!
+
+
+Its main idea is to use a set of user-defined functions to extract
+the path to a file from an import statement and then try to open a file from
+the result, searching for it in the |path|.
+
+In general it would process the source code in a file, extract the path where
+a symbol is defined and open its file. To achieve this, the plugin requires
+a pair of a pattern, which defines the form of the import and a function,
+which processes the match to extract the destination path.
+
+===============================================================================
+Section 2: Usage                                                 *daGama-usage*
+
+If the language used by the user is from lucky few, then:
+
+* hit <localleader>q for local definition
+* hit <localleader>Q for global definition
+
+In case the user is unlucky:
+1. Define a path processing function. It needs to take a list as parameter.
+   The parameter is a list of match groups, like the result of the standard
+   Vimscript |matchlist| function. It must return a string, representing the
+   path to a file. For example: >
+
+    :function! Js_require(match)
+    :  return "path/to/file"
+    :endfunction
+<
+
+2. Add a reference to the function in the patterns dictionary. The key should
+   be the pattern, that matches the import expression. The pair should be added
+   to g:daGama_pattterns. For example: >
+
+    :if !exists("g:daGama_patterns")
+    :  g:daGama_patterns = {}
+    :endif
+    :if empty(g:daGama_patterns[&ft])
+    :  g:daGama_patterns[&ft] = {}
+    :endif
+    :g:daGama_patterns[&ft]["^.*require([\"']\(!\.\)\(.*\)[\"'])"] = \
+    :            function("Js_require")
+<
+
+3. Good luck!
+
+
+===============================================================================
+Section 3: Mappings                                           *daGama-mappings*
+
+<localleader>q  - for local definition
+<localleader>Q  - for global definition
+
+===============================================================================
+Section 4: License                                             *daGama-license*
+
+MIT
+
+===============================================================================
+Section 5: Bugs                                                   *daGama-bugs*
+
+Plenty! As the popular saying goes: "Here be dragons!" The plugin is still in
+development phase and has not been tested at all!
+
+No, really! I haven't even tried it myself.
+
+If your machine catches fire, it's on you! You've been warned!
+
+That said, if the user finds a bug, she is encouraged to report it in the
+github issues facility of this project.
+
+===============================================================================
+Section 6: Contributing                                   *daGama-contributing*
+
+Through well documented pull-requests. I have never done that before, so it
+will be fun.
+
+===============================================================================
+Section 7: Changelog                                         *daGama-changelog*
+===============================================================================
+Section 8: Credits                                             *daGama-credits*

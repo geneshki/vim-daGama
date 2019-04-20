@@ -3,7 +3,7 @@ if !exists("g:daGama_patterns")
   let g:daGama_patterns = {}
 endif
 if empty(g:daGama_patterns[&ft])
-  g:daGama["javascript"] = {}
+  g:daGama[&ft] = {}
 endif
 
 g:daGama_patterns["javascript"]["^.*require([\"']\(!\.\)\(.*\)[\"'])"] = function("daGama#patterns#Js_require_webpack_shortcut")
